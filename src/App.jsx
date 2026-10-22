@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, MotionConfig, motion } from 'motion/react'
 import Achievements from './components/Achievements'
+import BackToTop from './components/BackToTop'
 import Contact from './components/Contact'
 import HelpOverlay from './components/HelpOverlay'
 import Hud from './components/Hud'
@@ -133,6 +134,7 @@ function Arcade() {
           setHelp(false)
         }}
       />
+      <BackToTop />
       <AnimatePresence>{rain && <PixelRain />}</AnimatePresence>
     </div>
   )

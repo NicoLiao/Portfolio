@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { about, achievements, featuredProject, profile, projects, quests, skills } from '../data'
 import { useGame } from '../game'
+import BackToTop from './BackToTop'
 
 // Plain, résumé-style page for quick reading. No effects, sound, or animation.
 
@@ -161,6 +162,7 @@ export default function SimpleMode() {
           </section>
         </main>
       </div>
+      <BackToTop variant="simple" />
     </div>
   )
 }
