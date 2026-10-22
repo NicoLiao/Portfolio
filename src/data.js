@@ -129,7 +129,10 @@ export const featuredProject = {
     'Trained a policy–value neural network in PyTorch to predict move probabilities and evaluate board positions for use with Monte Carlo Tree Search.',
   ],
   tags: ['PyTorch', 'Monte Carlo Tree Search', 'Policy–Value Network'],
-  links: { code: 'https://github.com/UTMIST/fix-my-elo' },
+  links: {
+    code: 'https://github.com/UTMIST/fix-my-elo',
+    demo: 'https://fme-frontend-795569892145.us-central1.run.app',
+  },
 }
 
 // Smaller projects from the previous portfolio (nicoliao.github.io/Nico-Web).
