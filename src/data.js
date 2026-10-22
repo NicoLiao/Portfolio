@@ -210,8 +210,8 @@ export const projects = [
 ]
 
 export const skills = [
-  { group: 'Languages', items: ['Python', 'C++', 'C#', 'Java', 'C', 'JavaScript', 'SQL', 'Bash', 'HTML/CSS'] },
-  { group: 'Frameworks & Libraries', items: ['Django', 'Django Ninja', 'PyTorch', 'NumPy', 'Pandas', 'Tailwind CSS', 'PySerial'] },
+  { group: 'Languages', items: ['Python', 'C++', 'C#', 'Java', 'C', 'JavaScript', 'SQL', 'Bash', 'HTML/CSS', 'TypeScript'] },
+  { group: 'Frameworks & Libraries', items: ['Django', 'Django Ninja', 'PyTorch', 'NumPy', 'Pandas', 'Tailwind CSS', 'PySerial', 'Node.js', 'React'] },
   { group: 'Databases & Tools', items: ['PostgreSQL', 'SQLite', 'Redis', 'Git', 'Docker', 'Docker Compose', 'Linux', 'REST APIs', 'OpenAPI', 'MQTT'] },
   { group: 'Game Dev & AI', items: ['Unreal Engine 5', 'Unity', 'Godot', 'Monte Carlo Tree Search'] },
 ]
