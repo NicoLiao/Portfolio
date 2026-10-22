@@ -24,7 +24,31 @@ export default function PlayerProfile() {
       <div className="grid gap-6 lg:grid-cols-[340px_1fr]">
         <Reveal>
           <div className="pixel-shadow border-2 border-accent bg-surface p-6 [--shadow:var(--color-accent)]">
-            <div className="relative flex justify-center border-2 border-line bg-bg py-8">
+            <div className="relative border-2 border-line bg-bg">
+              <motion.button
+                onClick={poke}
+                whileTap={{ scale: 0.97 }}
+                className="group relative block w-full overflow-hidden"
+                aria-label="Photo of Nico Liao"
+              >
+                <img
+                  src={profile.photo}
+                  alt=""
+                  width="640"
+                  height="640"
+                  loading="lazy"
+                  className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                {/* CRT treatment: neon tint + scanlines */}
+                <span className="pointer-events-none absolute inset-0 bg-linear-to-t from-accent-2/30 via-transparent to-accent/15 mix-blend-screen" aria-hidden="true" />
+                <span className="pointer-events-none absolute inset-0 bg-[repeating-linear-gradient(to_bottom,rgb(0_0_0/0.22)_0_1px,transparent_1px_3px)]" aria-hidden="true" />
+                <span className="absolute left-2 top-2 bg-bg/85 px-1.5 py-1 font-pixel text-[8px] text-accent-2" aria-hidden="true">
+                  P1
+                </span>
+                <span className="absolute bottom-2 right-2 border-2 border-accent bg-bg/85 p-1" aria-hidden="true">
+                  <PixelArt bitmap={KNIGHT} size={2} palette={{ '#': '#3df5ff', o: '#17142a', e: '#ff4fd8' }} />
+                </span>
+              </motion.button>
               <AnimatePresence>
                 {pokes > 0 && (
                   <motion.p
@@ -32,23 +56,13 @@ export default function PlayerProfile() {
                     initial={{ opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="absolute top-2 border-2 border-fg bg-fg px-2 py-1 font-pixel text-[8px] text-bg"
+                    className="pointer-events-none absolute left-1/2 top-3 -translate-x-1/2 whitespace-nowrap border-2 border-fg bg-fg px-2 py-1 font-pixel text-[8px] text-bg"
                     aria-live="polite"
                   >
                     {LINES[Math.min(pokes, LINES.length) - 1]}
                   </motion.p>
                 )}
               </AnimatePresence>
-              <motion.button
-                onClick={poke}
-                whileTap={{ scale: 0.9, rotate: -6 }}
-                animate={{ y: [0, -4, 0] }}
-                transition={{ y: { repeat: Infinity, duration: 2.4, ease: 'easeInOut' } }}
-                className="mt-4"
-                aria-label="Player avatar: a pixel chess knight"
-              >
-                <PixelArt bitmap={KNIGHT} size={8} palette={{ '#': '#3df5ff', o: '#17142a', e: '#ff4fd8' }} />
-              </motion.button>
             </div>
 
             <p className="mt-6 font-pixel text-sm">{profile.name.toUpperCase()}</p>

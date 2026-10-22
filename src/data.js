@@ -14,6 +14,7 @@ export const profile = {
   github: 'https://github.com/NicoLiao',
   linkedin: 'https://linkedin.com/in/nico-liao',
   resume: '/resume.pdf',
+  photo: '/nico.jpg',
 }
 
 export const sections = [
@@ -230,7 +231,7 @@ export const achievements = [
 export const secrets = [
   { id: 'konami', title: 'Old School', hint: '↑ ↑ ↓ ↓ …', text: 'Entered the Konami Code.' },
   { id: 'coins', title: 'Free Play', hint: 'Arcades run on coins.', text: 'Inserted 5 coins.' },
-  { id: 'poke', title: 'Say Hi', hint: 'The player is ticklish.', text: 'Poked the player 5 times.' },
+  { id: 'poke', title: 'Say Hi', hint: 'Try poking the player photo.', text: 'Poked the player 5 times.' },
 ]
 
 const escape = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')

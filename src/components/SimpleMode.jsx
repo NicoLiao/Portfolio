@@ -49,11 +49,14 @@ export default function SimpleMode() {
     <div className="min-h-screen bg-white text-zinc-900">
       <div className="mx-auto max-w-3xl px-5 py-10 sm:py-16">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight">{profile.name}</h1>
-            <p className="mt-1 text-zinc-600">
-              {profile.program} · {profile.school} · {profile.location}
-            </p>
+          <div className="flex items-center gap-4">
+            <img src={profile.photo} alt="" width="72" height="72" className="h-18 w-18 shrink-0 rounded-full object-cover" />
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight">{profile.name}</h1>
+              <p className="mt-1 text-zinc-600">
+                {profile.program} · {profile.school} · {profile.location}
+              </p>
+            </div>
           </div>
           <button
             onClick={() => setSimple(false)}
