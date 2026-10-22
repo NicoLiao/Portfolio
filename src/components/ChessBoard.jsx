@@ -83,7 +83,7 @@ export default function ChessBoard() {
 
   return (
     <div className="w-full">
-      <div className="@container relative aspect-square w-full overflow-hidden rounded-xl ring-1 ring-line">
+      <div className="@container relative aspect-square w-full overflow-hidden border-2 border-line">
         <div className="grid h-full w-full grid-cols-8 grid-rows-8">
           {board.map((row, r) =>
             row.map((cell, c) => {
@@ -99,20 +99,20 @@ export default function ChessBoard() {
                   key={`${r}${c}`}
                   onClick={() => onSquare(r, c)}
                   aria-label={`${sq(r, c)}${cell ? ` ${cell.p}` : ''}`}
-                  className={`relative flex items-center justify-center ${dark ? 'bg-[#1d1f2b]' : 'bg-[#2a2d3d]'} ${
+                  className={`relative flex items-center justify-center ${dark ? 'bg-[#1a1630]' : 'bg-[#2b2550]'} ${
                     clickable ? 'cursor-pointer' : 'cursor-default'
                   }`}
                 >
                   {isLast && <span className="absolute inset-0 bg-accent/20" />}
                   {isSel && <span className="absolute inset-0 bg-accent/30 ring-2 ring-inset ring-accent" />}
-                  {hint && <span className="absolute inset-[12%] animate-pulse rounded-full ring-2 ring-accent/60" />}
+                  {hint && <span className="absolute inset-[12%] animate-pulse ring-2 ring-gold/70" />}
 
                   {target && (
                     <motion.span
                       initial={{ scale: 0, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
-                      className="absolute inset-[8%] flex items-center justify-center rounded-md"
-                      style={{ background: `rgba(196,165,255,${0.15 + 0.6 * (target.p / maxP)})` }}
+                      className="absolute inset-[8%] flex items-center justify-center"
+                      style={{ background: `rgba(255,79,216,${0.15 + 0.6 * (target.p / maxP)})` }}
                     >
                       <span className="font-mono text-[3.2cqw] font-medium text-white">
                         {Math.round(target.p * 1000) / 10}%
@@ -127,7 +127,7 @@ export default function ChessBoard() {
                       className={`relative select-none text-[8.5cqw] leading-none ${
                         cell.p === cell.p.toUpperCase()
                           ? 'text-[#f1efe9] [text-shadow:0_1px_0_#000,0_0_8px_rgba(0,0,0,0.5)]'
-                          : 'text-[#0c0c10] [text-shadow:0_0_1px_rgba(255,255,255,0.35)]'
+                          : 'text-[#ff7fe3] [text-shadow:0_1px_0_#000,0_0_8px_rgba(255,79,216,0.45)]'
                       }`}
                     >
                       {GLYPH[cell.p.toLowerCase()]}
@@ -155,7 +155,7 @@ export default function ChessBoard() {
               Played <span className="text-fg">{sq(...played.from)}→{sq(...played.to)}</span> · prior{' '}
               {Math.round(prior(played.from, played.to) * 1000) / 10}%
             </span>
-            <button onClick={reset} className="rounded-full border border-line px-3 py-1 hover:border-faint hover:text-fg">
+            <button onClick={reset} className="border-2 border-line px-3 py-1 hover:border-gold hover:text-gold">
               Reset
             </button>
           </>

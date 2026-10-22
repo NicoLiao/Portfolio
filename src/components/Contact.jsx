@@ -1,91 +1,86 @@
-import { useRef, useState } from 'react'
-import { motion, useMotionValue, useSpring } from 'motion/react'
-import { isPlaceholder, profile } from '../data'
-import { Check, Copy, FileText, Github, Linkedin, Mail } from './icons'
-import { LinkIcon, Reveal, Section } from './ui'
+import { useEffect, useRef, useState } from 'react'
+import { useInView } from 'motion/react'
+import { profile } from '../data'
+import { useGame } from '../game'
+import { ArrowUpRight, Check, Copy, FileText, Github, Linkedin, Mail } from './icons'
+import { Reveal, Stage } from './ui'
 
-// Button that leans toward the cursor.
-function Magnetic({ children }) {
-  const ref = useRef(null)
-  const x = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 })
-  const y = useSpring(useMotionValue(0), { stiffness: 200, damping: 15 })
-  const onMove = (e) => {
-    const r = ref.current.getBoundingClientRect()
-    x.set((e.clientX - (r.left + r.width / 2)) * 0.3)
-    y.set((e.clientY - (r.top + r.height / 2)) * 0.3)
-  }
-  const reset = () => {
-    x.set(0)
-    y.set(0)
-  }
-  return (
-    <motion.div ref={ref} onMouseMove={onMove} onMouseLeave={reset} style={{ x, y }} className="inline-block">
-      {children}
-    </motion.div>
-  )
-}
+const option =
+  'group flex w-full items-center gap-3 border-2 border-line bg-raised px-4 py-3.5 text-left transition-colors hover:border-gold focus-visible:border-gold'
 
 export default function Contact() {
+  const { play } = useGame()
+  const ref = useRef(null)
+  const inView = useInView(ref)
+  const [count, setCount] = useState(9)
   const [copied, setCopied] = useState(false)
-  const placeholder = isPlaceholder(profile.email)
+
+  useEffect(() => {
+    if (!inView || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = setInterval(() => setCount((c) => (c === 0 ? 9 : c - 1)), 1000)
+    return () => clearInterval(t)
+  }, [inView])
 
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(profile.email)
       setCopied(true)
+      play('coin')
       setTimeout(() => setCopied(false), 1800)
     } catch {
       /* clipboard unavailable */
     }
   }
 
+  const links = [
+    { label: 'Email', sub: profile.email, href: `mailto:${profile.email}`, icon: Mail },
+    { label: 'GitHub', sub: 'github.com/NicoLiao', href: profile.github, icon: Github, external: true },
+    { label: 'LinkedIn', sub: 'linkedin.com/in/nico-liao', href: profile.linkedin, icon: Linkedin, external: true },
+    { label: 'Resume', sub: 'Résumé (PDF)', href: profile.resume, icon: FileText, external: true },
+  ]
+
   return (
-    <Section id="contact" index="05" title="Contact">
-      <div className="relative overflow-hidden rounded-3xl border border-line bg-surface/60 px-6 py-16 text-center sm:px-12 sm:py-24">
-        <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[36rem] max-w-full -translate-x-1/2 rounded-full bg-accent/15 blur-3xl" />
-        <Reveal>
-          <h3 className="relative text-4xl font-semibold tracking-tighter sm:text-6xl">
-            Let's build
-            <br />
-            <span className="bg-linear-to-r from-accent to-accent-2 bg-clip-text text-transparent">something together.</span>
-          </h3>
-          <p className="relative mx-auto mt-5 max-w-md text-muted">
-            I'm open to internships, research, and interesting projects. Reach out — I'll get back to you.
+    <Stage id="contact" title="Contact">
+      <Reveal>
+        <div ref={ref} className="pixel-shadow relative overflow-hidden border-2 border-accent-2 bg-surface px-5 py-14 text-center sm:px-10">
+          <div className="stars absolute inset-0 opacity-50" aria-hidden="true" />
+          <p className="neon relative font-pixel text-2xl text-gold sm:text-4xl">CONTINUE?</p>
+          <p className="relative mt-5 font-pixel text-5xl tabular-nums sm:text-7xl" aria-hidden="true">
+            {count}
           </p>
-        </Reveal>
+          <p className="relative mx-auto mt-6 max-w-md text-muted">Want to team up or just say hi? Pick an option below.</p>
 
-        <Reveal delay={0.1}>
-          <div className="relative mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Magnetic>
-              <a
-                href={placeholder ? undefined : `mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 rounded-full bg-fg px-6 py-3 text-sm font-medium text-bg"
-              >
-                <Mail /> Say hello
-              </a>
-            </Magnetic>
-            <button
-              onClick={copy}
-              className="inline-flex max-w-full items-center gap-2 rounded-full border border-line bg-bg/60 px-5 py-3 font-mono text-sm text-muted transition-colors hover:border-faint hover:text-fg"
-            >
-              <span className={`truncate ${placeholder ? 'italic text-faint' : ''}`}>{profile.email}</span>
-              {copied ? <Check className="shrink-0 text-emerald-400" /> : <Copy className="shrink-0" />}
-            </button>
-          </div>
-        </Reveal>
-
-        <div className="relative mt-10 flex flex-wrap items-center justify-center gap-6">
-          <LinkIcon href={profile.github} label="GitHub">
-            <Github /> GitHub
-          </LinkIcon>
-          <LinkIcon href={profile.linkedin} label="LinkedIn">
-            <Linkedin /> LinkedIn
-          </LinkIcon>
-          <LinkIcon href={profile.resume} label="Résumé">
-            <FileText /> Résumé
-          </LinkIcon>
+          <ul className="relative mx-auto mt-10 grid max-w-2xl gap-3 sm:grid-cols-2">
+            {links.map(({ label, sub, href, icon: Icon, external }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target={external ? '_blank' : undefined}
+                  rel="noreferrer"
+                  onMouseEnter={() => play('hover')}
+                  onClick={() => play('select')}
+                  className={option}
+                >
+                  <Icon className="shrink-0 text-accent" />
+                  <span className="min-w-0 flex-1">
+                    <span className="block font-pixel text-[10px]">{label.toUpperCase()}</span>
+                    <span className="mt-1 block truncate text-sm text-muted">{sub}</span>
+                  </span>
+                  <ArrowUpRight className="shrink-0 text-faint transition-colors group-hover:text-gold" />
+                </a>
+              </li>
+            ))}
+            <li className="sm:col-span-2">
+              <button onClick={copy} onMouseEnter={() => play('hover')} className={`${option} justify-center`}>
+                {copied ? <Check className="text-lime" /> : <Copy className="text-accent" />}
+                <span className="font-pixel text-[10px]" aria-live="polite">
+                  {copied ? 'EMAIL COPIED!' : 'COPY EMAIL ADDRESS'}
+                </span>
+              </button>
+            </li>
+          </ul>
         </div>
-      </div>
-    </Section>
+      </Reveal>
+    </Stage>
   )
 }

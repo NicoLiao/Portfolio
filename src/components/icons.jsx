@@ -50,6 +50,19 @@ export const Copy = (p) => (
 export const Check = (p) => (
   <svg {...base} {...p}><path d="M20 6 9 17l-5-5" /></svg>
 )
+export const Volume = (p) => (
+  <svg {...base} {...p}>
+    <path d="M11 5 6 9H2v6h4l5 4z" />
+    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+    <path d="M19 5a10 10 0 0 1 0 14" />
+  </svg>
+)
+export const VolumeOff = (p) => (
+  <svg {...base} {...p}>
+    <path d="M11 5 6 9H2v6h4l5 4z" />
+    <path d="m22 9-6 6" /><path d="m16 9 6 6" />
+  </svg>
+)
 export const Menu = (p) => (
   <svg {...base} {...p}><path d="M4 7h16" /><path d="M4 17h16" /></svg>
 )
